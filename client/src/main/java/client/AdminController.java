@@ -5,7 +5,7 @@ import javafx.scene.control.TextField;
 import javafx.scene.control.Button;
 import javafx.scene.control.Label;
 import javafx.event.ActionEvent;
-import client.models.Question;
+import models.Question;
 import javafx.application.Platform;
 import java.util.ArrayList;
 

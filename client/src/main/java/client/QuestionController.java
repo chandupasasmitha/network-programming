@@ -8,7 +8,7 @@ import javafx.scene.control.ToggleGroup;
 import javafx.scene.control.ProgressBar;
 import javafx.event.ActionEvent;
 import javafx.application.Platform;
-import client.models.Question;
+import models.Question;
 
 public class QuestionController {
 

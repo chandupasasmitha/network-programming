@@ -18,12 +18,12 @@ if (-not (Test-Path $javafx)) {
 
 New-Item -ItemType Directory -Force -Path $out | Out-Null
 
-# Collect all Java source files
+# Collect all Java source files from client only (models are inside client now)
 $src = Get-ChildItem -Path 'client/src/main/java' -Recurse -Filter '*.java' | ForEach-Object { $_.FullName }
 if ($src.Count -eq 0) { Write-Error "No Java sources found under client/src/main/java"; exit 1 }
 
 Write-Host "Compiling $($src.Count) Java files..."
-javac --module-path "$javafx" --add-modules javafx.controls,javafx.fxml -d $out $src
+javac --module-path "$javafx" --add-modules javafx.controls, javafx.fxml -d $out $src
 if ($LASTEXITCODE -ne 0) { Write-Error "javac failed (see messages above)"; exit $LASTEXITCODE }
 
 Write-Host "Running client..."
@@ -32,8 +32,9 @@ $resourcesRoot = 'client/src/main/resources'
 if (Test-Path $resourcesRoot) {
     Write-Host "Copying resources from $resourcesRoot to $out"
     Copy-Item -Path (Join-Path $resourcesRoot '*') -Destination $out -Recurse -Force
-} else {
+}
+else {
     Write-Warning "No resources folder found at $resourcesRoot"
 }
 
-java --enable-native-access=javafx.graphics --module-path "$javafx" --add-modules javafx.controls,javafx.fxml -cp $out client.QuizClient
+java --enable-native-access=javafx.graphics --module-path "$javafx" --add-modules javafx.controls, javafx.fxml -cp $out client.QuizClient
