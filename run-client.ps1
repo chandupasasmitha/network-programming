@@ -23,9 +23,12 @@ $src = Get-ChildItem -Path 'client/src/main/java' -Recurse -Filter '*.java' | Fo
 if ($src.Count -eq 0) { Write-Error "No Java sources found under client/src/main/java"; exit 1 }
 
 Write-Host "Compiling $($src.Count) Java files..."
-javac --module-path "$javafx" --add-modules javafx.controls, javafx.fxml -d $out $src
+# Ensure the module list is passed as a single argument to javac (PowerShell treats commas specially)
+$moduleList = 'javafx.controls,javafx.fxml'
+javac --module-path "$javafx" --add-modules $moduleList -d $out $src
 if ($LASTEXITCODE -ne 0) { Write-Error "javac failed (see messages above)"; exit $LASTEXITCODE }
 
+# Run the client
 Write-Host "Running client..."
 # Copy resources (FXML, CSS, etc.) to output so FXMLLoader can find them on the classpath
 $resourcesRoot = 'client/src/main/resources'
@@ -37,4 +40,5 @@ else {
     Write-Warning "No resources folder found at $resourcesRoot"
 }
 
-java --enable-native-access=javafx.graphics --module-path "$javafx" --add-modules javafx.controls, javafx.fxml -cp $out client.QuizClient
+# Ensure the module list is passed as a single argument to the JVM as well
+java --enable-native-access=javafx.graphics --module-path "$javafx" --add-modules $moduleList -cp $out client.QuizClient
