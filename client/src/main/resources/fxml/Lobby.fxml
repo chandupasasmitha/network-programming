@@ -1,0 +1,29 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<?import javafx.scene.control.*?>
+<?import javafx.scene.layout.*?>
+<?import javafx.geometry.*?>
+<VBox xmlns="http://javafx.com/javafx/8" xmlns:fx="http://javafx.com/fxml/1" fx:controller="client.LobbyController" spacing="12" alignment="TOP_CENTER" styleClass="root">
+    <padding><Insets top="20" right="20" bottom="20" left="20"/></padding>
+    <HBox spacing="10" alignment="CENTER">
+        <Label text="Player name:" />
+        <TextField fx:id="nameField" promptText="Enter your name" />
+        <Button fx:id="joinButton" text="Join" onAction="#onJoin" />
+        <Label fx:id="statusLabel" text="Not connected" />
+    </HBox>
+
+    <SplitPane prefHeight="400" prefWidth="800" orientation="HORIZONTAL">
+        <VBox spacing="8" alignment="TOP_CENTER">
+            <Label text="Lobby / Connected players" style="-fx-font-size:16px; -fx-font-weight:bold;" />
+            <ListView fx:id="playersList" prefWidth="300" prefHeight="350" />
+        </VBox>
+
+        <VBox spacing="8" alignment="TOP_CENTER">
+            <Label text="Navigation" style="-fx-font-size:16px; -fx-font-weight:bold;" />
+            <Button text="Open Question View (demo)" disable="true" />
+            <Button text="Open Leaderboard" disable="true" />
+            <Button text="Open Admin Dashboard" disable="true" />
+            <Region VBox.vgrow="ALWAYS" />
+            <Label text="(Buttons are placeholders; navigation will be wired later)" wrapText="true" />
+        </VBox>
+    </SplitPane>
+</VBox>

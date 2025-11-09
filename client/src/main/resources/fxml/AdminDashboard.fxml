@@ -1,0 +1,36 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<?import javafx.scene.control.*?>
+<?import javafx.scene.layout.*?>
+<?import javafx.geometry.*?>
+<VBox xmlns="http://javafx.com/javafx/8" xmlns:fx="http://javafx.com/fxml/1" fx:controller="client.AdminController" spacing="10" alignment="TOP_LEFT">
+    <padding><Insets top="20" right="20" bottom="20" left="20"/></padding>
+    <Label text="Admin Dashboard - Manage Questions" style="-fx-font-size:16px; -fx-font-weight:bold;" />
+    <GridPane hgap="8" vgap="8">
+        <columnConstraints>
+            <ColumnConstraints percentWidth="20" />
+            <ColumnConstraints percentWidth="80" />
+        </columnConstraints>
+        <Label text="Question:" GridPane.rowIndex="0" GridPane.columnIndex="0" />
+        <TextField fx:id="qText" GridPane.rowIndex="0" GridPane.columnIndex="1" />
+
+        <Label text="Option A:" GridPane.rowIndex="1" GridPane.columnIndex="0" />
+        <TextField fx:id="optA" GridPane.rowIndex="1" GridPane.columnIndex="1" />
+
+        <Label text="Option B:" GridPane.rowIndex="2" GridPane.columnIndex="0" />
+        <TextField fx:id="optB" GridPane.rowIndex="2" GridPane.columnIndex="1" />
+
+        <Label text="Option C:" GridPane.rowIndex="3" GridPane.columnIndex="0" />
+        <TextField fx:id="optC" GridPane.rowIndex="3" GridPane.columnIndex="1" />
+
+        <Label text="Option D:" GridPane.rowIndex="4" GridPane.columnIndex="0" />
+        <TextField fx:id="optD" GridPane.rowIndex="4" GridPane.columnIndex="1" />
+
+        <Label text="Correct Index (0-3):" GridPane.rowIndex="5" GridPane.columnIndex="0" />
+        <TextField fx:id="correctField" GridPane.rowIndex="5" GridPane.columnIndex="1" />
+
+    </GridPane>
+    <HBox spacing="8">
+        <Button fx:id="addButton" text="Add Question" onAction="#onAddQuestion" />
+        <Label fx:id="status" text="" />
+    </HBox>
+</VBox>

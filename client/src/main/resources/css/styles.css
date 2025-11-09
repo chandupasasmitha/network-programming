@@ -1,0 +1,18 @@
+/* Basic styling for JavaFX client */
+.root {
+    -fx-font-family: "Segoe UI", Roboto, "Arial";
+    -fx-background-color: linear-gradient(to bottom right, #ffffff, #f0f4ff);
+}
+
+Label {
+    -fx-text-fill: #2b2b2b;
+}
+
+Button {
+    -fx-background-color: #4a90e2;
+    -fx-text-fill: white;
+}
+
+ListView {
+    -fx-border-color: #ddd;
+}
