@@ -26,49 +26,50 @@ public class AdminController {
     private final HttpClient httpClient = HttpClient.newHttpClient();
 
     @FXML
-    public void onAddQuestion(ActionEvent e) {
-        String text = qText.getText().trim();
-        if (text.isEmpty()) {
-            status.setText("Question text required");
-            return;
-        }
-
-        ArrayList<String> opts = new ArrayList<>();
-        opts.add(optA.getText());
-        opts.add(optB.getText());
-        opts.add(optC.getText());
-        opts.add(optD.getText());
-
-        int correct = 0;
-        try { correct = Integer.parseInt(correctField.getText()); } catch (Exception ignored) {}
-
-        Question q = new Question(text, opts, correct);
-
-        // ✅ Send question to backend REST API in a background thread
-        new Thread(() -> {
-            try {
-                String json = objectMapper.writeValueAsString(q);
-
-                HttpRequest request = HttpRequest.newBuilder()
-                        .uri(URI.create("http://localhost:8080/addQuestion"))
-                        .header("Content-Type", "application/json")
-                        .POST(HttpRequest.BodyPublishers.ofString(json))
-                        .build();
-
-                HttpResponse<String> response = httpClient.send(request, HttpResponse.BodyHandlers.ofString());
-                int code = response.statusCode();
-
-                Platform.runLater(() ->
-                        status.setText(code == 200 ? "Question added to MongoDB" : "Failed to add question (" + code + ")")
-                );
-            } catch (Exception ex) {
-                ex.printStackTrace();
-                Platform.runLater(() -> status.setText("Error connecting to server"));
-            }
-        }).start();
-
-        clearForm();
+public void onAddQuestion(ActionEvent e) {
+    String text = qText.getText().trim();
+    if (text.isEmpty()) {
+        status.setText("Question text required");
+        return;
     }
+
+    ArrayList<String> opts = new ArrayList<>();
+    opts.add(optA.getText());
+    opts.add(optB.getText());
+    opts.add(optC.getText());
+    opts.add(optD.getText());
+
+    int correct = 0;
+    try { correct = Integer.parseInt(correctField.getText()); } catch (Exception ignored) {}
+
+    int timeLimit = 15; // default 15 seconds
+    Question q = new Question(text, opts, correct, timeLimit);
+
+    // Send question to backend REST API in a background thread
+    new Thread(() -> {
+        try {
+            String json = objectMapper.writeValueAsString(q);
+
+            HttpRequest request = HttpRequest.newBuilder()
+                    .uri(URI.create("http://localhost:8080/addQuestion"))
+                    .header("Content-Type", "application/json")
+                    .POST(HttpRequest.BodyPublishers.ofString(json))
+                    .build();
+
+            HttpResponse<String> response = httpClient.send(request, HttpResponse.BodyHandlers.ofString());
+            int code = response.statusCode();
+
+            Platform.runLater(() ->
+                    status.setText(code == 200 ? "Question added to MongoDB" : "Failed to add question (" + code + ")")
+            );
+        } catch (Exception ex) {
+            ex.printStackTrace();
+            Platform.runLater(() -> status.setText("Error connecting to server"));
+        }
+    }).start();
+
+    clearForm();
+}
 
     private void clearForm() {
         qText.clear();

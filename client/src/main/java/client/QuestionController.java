@@ -10,6 +10,9 @@ import javafx.event.ActionEvent;
 import javafx.application.Platform;
 import models.Question;
 
+import java.util.Timer;
+import java.util.TimerTask;
+
 public class QuestionController {
 
     @FXML
@@ -26,12 +29,20 @@ public class QuestionController {
     private ProgressBar timeProgress;
 
     private Question currentQuestion;
+    private Timer timer;
+    private int timeLeft;
+    private QuizConnection connection; // ⛓️ socket communication
+
+    public void setConnection(QuizConnection connection) {
+        this.connection = connection;
+    }
 
     @FXML
     public void initialize() {
-        // prepared for dynamic updates
+        timeProgress.setProgress(1.0);
     }
 
+    /** ✅ Called when a new question arrives */
     public void setQuestion(Question q) {
         currentQuestion = q;
         Platform.runLater(() -> {
@@ -44,39 +55,66 @@ public class QuestionController {
             }
             submitButton.setDisable(false);
         });
+
+        startTimer(q.getTimeLimitSeconds());
     }
 
-   @FXML
-public void onSubmit(ActionEvent e) {
-    RadioButton selected = (RadioButton) optionsGroup.getSelectedToggle();
-    if (selected == null) {
-        return;
-    }
-    String answer = selected.getText();
-    System.out.println("Answer submitted: " + answer); // fix yellow underline
-    // TODO: send answer to server via socket
-    submitButton.setDisable(true);
-    timerLabel.setText("Answer submitted");
-}
+    /** 🕒 Start question timer */
+    private void startTimer(int totalSeconds) {
+        if (timer != null) timer.cancel();
+        timeLeft = totalSeconds;
+        timer = new Timer();
 
+        timer.scheduleAtFixedRate(new TimerTask() {
+            @Override
+            public void run() {
+                updateTimer(timeLeft, totalSeconds);
+                timeLeft--;
+                if (timeLeft < 0) {
+                    timer.cancel();
+                    onAutoSubmit();
+                }
+            }
+        }, 0, 1000);
+    }
+
+    @FXML
+    public void onSubmit(ActionEvent e) {
+        RadioButton selected = (RadioButton) optionsGroup.getSelectedToggle();
+        if (selected == null) return;
+
+        String answer = selected.getText();
+        System.out.println("✅ Answer submitted: " + answer);
+
+        // ✅ Send answer to server
+        if (connection != null) {
+            connection.sendAnswer(answer);
+        }
+
+        submitButton.setDisable(true);
+        timer.cancel();
+        Platform.runLater(() -> timerLabel.setText("Answer submitted"));
+    }
 
     public void updateTimer(int secondsLeft, int total) {
         Platform.runLater(() -> {
-            timerLabel.setText(String.valueOf(secondsLeft) + "s");
+            timerLabel.setText(secondsLeft + "s");
             if (total > 0) {
-                timeProgress.setProgress(1.0 * secondsLeft / total);
-            }
-            if (secondsLeft <= 0) {
-                onAutoSubmit();
+                timeProgress.setProgress((double) secondsLeft / total);
             }
         });
     }
 
+    /** 🕓 Auto-submit when time ends */
     private void onAutoSubmit() {
         Platform.runLater(() -> {
             submitButton.setDisable(true);
             timerLabel.setText("Time up - auto-submitted");
-            // TODO: auto-submit default or empty answer to server
+
+            // ⏰ Send empty or default answer
+            if (connection != null) {
+                connection.sendAnswer("No answer (timeout)");
+            }
         });
     }
 }
