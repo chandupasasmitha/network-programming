@@ -1,18 +1,128 @@
-/* Basic styling for JavaFX client */
+/* ================================================
+   🌟 Global Styles
+   ================================================ */
 .root {
-    -fx-font-family: "Segoe UI", Roboto, "Arial";
-    -fx-background-color: linear-gradient(to bottom right, #ffffff, #f0f4ff);
+    -fx-font-family: "Segoe UI", "Roboto", "Arial";
+    -fx-background-color: linear-gradient(to bottom right, #f8fbff, #e3edff);
+    -fx-padding: 25;
 }
 
-Label {
+/* ================================================
+   🏷️ Labels
+   ================================================ */
+.label {
     -fx-text-fill: #2b2b2b;
+    -fx-font-size: 14px;
+    -fx-font-weight: 500;
 }
 
-Button {
-    -fx-background-color: #4a90e2;
+.title-label {
+    -fx-font-size: 22px;
+    -fx-font-weight: 700;
+    -fx-text-fill: linear-gradient(to right, #2a4d9b, #568bff);
+    -fx-effect: dropshadow(gaussian, rgba(86,139,255,0.3), 8, 0, 0, 2);
+}
+
+/* ================================================
+   🎨 Buttons
+   ================================================ */
+.button {
+    -fx-background-color: linear-gradient(to bottom right, #5b9dff, #377dff);
+    -fx-text-fill: white;
+    -fx-font-size: 14px;
+    -fx-font-weight: 600;
+    -fx-background-radius: 10;
+    -fx-cursor: hand;
+    -fx-padding: 10 18;
+    -fx-effect: dropshadow(gaussian, rgba(0,0,0,0.18), 6, 0, 0, 2);
+    -fx-transition: all 0.2s ease-in-out;
+}
+
+.button:hover {
+    -fx-background-color: linear-gradient(to bottom right, #6baaff, #4b8dff);
+    -fx-effect: dropshadow(gaussian, rgba(0,0,0,0.28), 8, 0, 0, 3);
+    -fx-scale-x: 1.03;
+    -fx-scale-y: 1.03;
+}
+
+.button:pressed {
+    -fx-background-color: linear-gradient(to bottom right, #377dff, #2d66d6);
+    -fx-effect: none;
+    -fx-scale-x: 0.98;
+    -fx-scale-y: 0.98;
+}
+
+/* ================================================
+   📋 ListView
+   ================================================ */
+.list-view {
+    -fx-background-color: #ffffff;
+    -fx-border-color: #cfd8dc;
+    -fx-border-radius: 8;
+    -fx-background-radius: 8;
+    -fx-padding: 6;
+}
+
+.list-cell {
+    -fx-font-size: 13px;
+    -fx-padding: 10 14;
+    -fx-text-fill: #2b2b2b;
+    -fx-background-radius: 6;
+    -fx-transition: background-color 0.15s ease-in-out;
+}
+
+.list-cell:filled:selected, .list-cell:filled:selected:hover {
+    -fx-background-color: linear-gradient(to right, #4a90e2, #5aa1f3);
     -fx-text-fill: white;
 }
 
-ListView {
-    -fx-border-color: #ddd;
+.list-cell:hover {
+    -fx-background-color: #edf3ff;
+}
+
+/* ================================================
+   🧱 Cards or Containers
+   ================================================ */
+.card {
+    -fx-background-color: white;
+    -fx-background-radius: 14;
+    -fx-effect: dropshadow(gaussian, rgba(0,0,0,0.12), 10, 0, 0, 4);
+    -fx-padding: 25;
+    -fx-spacing: 12;
+    -fx-border-color: rgba(0,0,0,0.05);
+    -fx-border-radius: 14;
+}
+
+/* ================================================
+   ✨ Input Fields (Optional if you use TextField)
+   ================================================ */
+.text-field {
+    -fx-background-color: #f7faff;
+    -fx-border-color: #d0d8e8;
+    -fx-border-radius: 6;
+    -fx-background-radius: 6;
+    -fx-padding: 8 10;
+    -fx-font-size: 13px;
+}
+
+.text-field:focused {
+    -fx-border-color: #5b9dff;
+    -fx-effect: dropshadow(gaussian, rgba(91,157,255,0.25), 6, 0, 0, 1);
+}
+
+/* ================================================
+   🌙 Optional: Dark Mode (toggle dynamically)
+   ================================================ */
+.dark-mode {
+    -fx-background-color: linear-gradient(to bottom right, #1c1f26, #2a2f38);
+}
+
+.dark-mode .label,
+.dark-mode .list-cell {
+    -fx-text-fill: #f0f0f0;
+}
+
+.dark-mode .card {
+    -fx-background-color: #2b2f39;
+    -fx-effect: dropshadow(gaussian, rgba(0,0,0,0.6), 10, 0, 0, 3);
 }
