@@ -46,17 +46,19 @@ public class QuestionController {
         });
     }
 
-    @FXML
-    public void onSubmit(ActionEvent e) {
-        RadioButton selected = (RadioButton) optionsGroup.getSelectedToggle();
-        if (selected == null) {
-            return;
-        }
-        String answer = selected.getText();
-        // TODO: send answer to server via socket
-        submitButton.setDisable(true);
-        timerLabel.setText("Answer submitted");
+   @FXML
+public void onSubmit(ActionEvent e) {
+    RadioButton selected = (RadioButton) optionsGroup.getSelectedToggle();
+    if (selected == null) {
+        return;
     }
+    String answer = selected.getText();
+    System.out.println("Answer submitted: " + answer); // fix yellow underline
+    // TODO: send answer to server via socket
+    submitButton.setDisable(true);
+    timerLabel.setText("Answer submitted");
+}
+
 
     public void updateTimer(int secondsLeft, int total) {
         Platform.runLater(() -> {

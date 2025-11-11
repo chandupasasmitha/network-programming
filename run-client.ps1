@@ -6,7 +6,7 @@ You provided the path that ends with `.../bin` — the script uses the `lib` fol
 #>
 
 # Path to JavaFX SDK 'lib' folder (change only if different)
-$javafx = 'C:/Users/chand/Downloads/openjfx-25.0.1_windows-x64_bin-sdk/javafx-sdk-25.0.1/lib'
+$javafx = 'C:\Program Files\Java\javafx-sdk-21.0.9\lib'
 
 $out = 'out'
 Write-Host "Using JavaFX lib: $javafx"
