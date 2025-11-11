@@ -43,6 +43,13 @@ public class SocketClient {
         }
     }
 
+    // Request the full current lobby list from the server
+    public void requestLobbyList() {
+        if (out != null) {
+            out.println("REQUEST_LOBBY_LIST"); // special command server will recognize
+        }
+    }
+
     // Close connection
     public void disconnect() {
         try {

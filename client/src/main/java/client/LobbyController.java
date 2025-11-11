@@ -7,6 +7,8 @@ import javafx.event.ActionEvent;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 
+import java.util.List;
+
 public class LobbyController {
 
     @FXML
@@ -39,7 +41,12 @@ public class LobbyController {
         socketClient = new SocketClient();
 
         try {
+            // Connect and provide a callback for server messages
             socketClient.connect("localhost", 5000, playerName, this::handleServerMessage);
+
+            // Request the full current lobby list immediately after connecting
+            socketClient.requestLobbyList();
+
             statusLabel.setText("Connected as " + playerName);
             joinButton.setDisable(true);
         } catch (Exception ex) {
@@ -58,6 +65,14 @@ public class LobbyController {
             } else if (message.startsWith("Player left:")) {
                 String left = message.replace("Player left:", "").trim();
                 players.remove(left);
+            } else if (message.startsWith("LobbyList:")) {
+                // Full lobby list from server
+                String listData = message.replace("LobbyList:", "").trim();
+                String[] allPlayers = listData.split(",");
+                players.clear();
+                for (String p : allPlayers) {
+                    if (!p.isEmpty()) players.add(p.trim());
+                }
             } else {
                 System.out.println("Server message: " + message);
             }
