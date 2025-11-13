@@ -1,15 +1,50 @@
 <?xml version="1.0" encoding="UTF-8"?>
-
 <?import javafx.scene.control.*?>
-<?import javafx.scene.layout.VBox?>
+<?import javafx.scene.layout.*?>
 
-<VBox spacing="10" alignment="CENTER" xmlns="http://javafx.com/javafx/17" xmlns:fx="http://javafx.com/fxml"
-      fx:controller="client.QuizController">
-    <Label fx:id="questionLabel" text="Question will appear here" wrapText="true"/>
-    <RadioButton fx:id="option1" text="Option 1"/>
-    <RadioButton fx:id="option2" text="Option 2"/>
-    <RadioButton fx:id="option3" text="Option 3"/>
-    <RadioButton fx:id="option4" text="Option 4"/>
-    <Label fx:id="timerLabel" text="Time: 0s"/>
-    <Button fx:id="submitButton" text="Submit"/>
-</VBox>
+<!-- 1. Outer StackPane (centers everything) -->
+<StackPane xmlns="http://javafx.com/javafx/21"
+           xmlns:fx="http://javafx.com/fxml/1"
+           fx:controller="client.QuizController"
+           styleClass="bg">
+
+    <!-- 2. Inner VBox – the real quiz card -->
+    <VBox alignment="CENTER"
+          spacing="28"
+          styleClass="quiz-card"
+          maxWidth="800"
+          prefWidth="800">
+
+        <Label fx:id="questionNumberLabel"
+               text="Question 1 of 10"
+               styleClass="title-label"/>
+
+        <Label fx:id="questionLabel"
+               text="Question Text Here"
+               wrapText="true"
+               styleClass="question-label"/>
+
+        <!-- Options – fixed width, centered -->
+        <VBox spacing="14"
+              prefWidth="560"
+              maxWidth="560"
+              alignment="CENTER_LEFT">
+            <RadioButton fx:id="option1" styleClass="option-button" text="Option A"/>
+            <RadioButton fx:id="option2" styleClass="option-button" text="Option B"/>
+            <RadioButton fx:id="option3" styleClass="option-button" text="Option C"/>
+            <RadioButton fx:id="option4" styleClass="option-button" text="Option D"/>
+        </VBox>
+
+        <!-- Timer + Submit -->
+        <HBox spacing="22" alignment="CENTER">
+            <Label fx:id="timerLabel"
+                   text="Time: 15s"
+                   styleClass="timer-label"/>
+            <ProgressBar fx:id="timerProgress"
+                         prefWidth="220"/>
+            <Button fx:id="submitButton"
+                    text="Submit"
+                    styleClass="button"/>
+        </HBox>
+    </VBox>
+</StackPane>
