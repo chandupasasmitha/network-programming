@@ -1,0 +1,15 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.scene.control.*?>
+<?import javafx.scene.layout.VBox?>
+
+<VBox spacing="10" alignment="CENTER" xmlns="http://javafx.com/javafx/17" xmlns:fx="http://javafx.com/fxml"
+      fx:controller="client.QuizController">
+    <Label fx:id="questionLabel" text="Question will appear here" wrapText="true"/>
+    <RadioButton fx:id="option1" text="Option 1"/>
+    <RadioButton fx:id="option2" text="Option 2"/>
+    <RadioButton fx:id="option3" text="Option 3"/>
+    <RadioButton fx:id="option4" text="Option 4"/>
+    <Label fx:id="timerLabel" text="Time: 0s"/>
+    <Button fx:id="submitButton" text="Submit"/>
+</VBox>
