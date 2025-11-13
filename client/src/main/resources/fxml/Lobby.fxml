@@ -19,9 +19,11 @@
 
         <VBox spacing="8" alignment="TOP_CENTER">
             <Label text="Navigation" style="-fx-font-size:16px; -fx-font-weight:bold;" />
-            <Button text="Open Question View (demo)" disable="true" />
-            <Button text="Open Leaderboard" disable="true" />
-            <Button text="Open Admin Dashboard" disable="true" />
+
+            <Button fx:id="openQuestionBtn" text="Open Question View (demo)" onAction="#onOpenQuestionView" />
+
+            <Button text="Open Leaderboard" disable="false" />
+            <Button text="Open Admin Dashboard" disable="false" />
             <Region VBox.vgrow="ALWAYS" />
             <Label text="(Buttons are placeholders; navigation will be wired later)" wrapText="true" />
         </VBox>
