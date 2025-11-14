@@ -1,10 +1,11 @@
 {
     "java.project.sourcePaths": [
-        "client\\src\\main\\java"
+        "client/src/main/java"
     ],
-    "java.project.referencedLibraries": [
-    "C:/Users/chand/Downloads/openjfx-25.0.1_windows-x64_bin-sdk/javafx-sdk-25.0.1/lib/**/*.jar"
-  ]
-
-    
+    "java.project.resourcePaths": [
+        "client/src/main/resources"
+    ],
+    // JavaFX libraries will be automatically resolved from Maven pom.xml
+    // If you still see errors, reload the window (Ctrl+Shift+P -> "Developer: Reload Window")
+    "java.configuration.updateBuildConfiguration": "automatic"
 }

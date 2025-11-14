@@ -1,4 +1,4 @@
-<#
+w<#
 Simple PowerShell script to compile and run the JavaFX client.
 
 Edit the $javafx variable below if your JavaFX SDK is installed somewhere else.
